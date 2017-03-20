@@ -25,22 +25,22 @@ int main()
 	int bnd = bind(server_fd, (struct sockaddr *) &server, sizeof(server));
 	if(bind < 0)
 	{
-		printf("Could not bind socket");
+		printf("Could not bind socket\n");
 		exit(1);
 	}
 
 	else
-		printf("Socket bound on port 23");
+		printf("Socket bound on port 23\n");
 
 	int lst = listen(server_fd, 128);
 	if(listen < 0)
 	{
-		printf("Could not listen on socket");
+		printf("Could not listen on socket\n");
 		exit(1);
 	}
 
 	else
-		printf("Listening on socket");
+		printf("Listening on socket\n");
 
 	char buffer[1024];//length of buffer//
 	
@@ -51,12 +51,12 @@ int main()
 		int acc = accept(server_fd, (struct sockaddr *) &client, &clientSize);
 		if(acc < 0)
 		{
-			printf("Failed to connect");
+			printf("Failed to connect\n");
 			exit(1);
 		}
 
 		else
-			printf("Connected");
+			printf("Connected\n");
 
 		while(1)//read and execute command//
 		{
@@ -66,19 +66,21 @@ int main()
 
 			if(read < 0)
 			{
-				printf("Failed to read from client");
+				printf("Failed to read from client\n");
 				exit(1);
 			}
 
 			int status = system(buffer);
 			if(status < 0)
 			{
-				printf("Failed to execute command");
+				printf("Failed to execute command\n");
 				exit(1);
 			}
 		
-			strcpy(buffer, "Command Executed");
+			strcpy(buffer, "Command Executed\n");
 			send(client_fd, buffer, sizeof(buffer), 0);
 		}
+        close(client_fd);
+        printf("Connection closed\n");
 	}
 }

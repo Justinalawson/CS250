@@ -1,0 +1,2 @@
+Target OS: Ubuntu
+Path: /usr/local/bin
